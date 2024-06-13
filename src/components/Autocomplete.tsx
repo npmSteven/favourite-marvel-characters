@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState, useRef } from 'react';
+import React, { ChangeEvent, useMemo, useState, useRef, KeyboardEvent } from 'react';
 import MarvelSVG from '../assets/marvel.svg';
 
 export function Autocomplete({
@@ -38,6 +38,7 @@ export function Autocomplete({
   };
 
   const handleClick = () => {
+    if (isLoading) return;
     buttonRef.current?.focus();
     onSubmit();
   };
@@ -57,9 +58,15 @@ export function Autocomplete({
             className="w-full focus-visible:outline-none h-full"
             onFocus={handleFocus}
             onBlur={handleBlur}
+            autoFocus
             placeholder={placeholder}
             ref={inputRef}
             value={value}
+            onKeyDown={(e: KeyboardEvent<HTMLInputElement>): void => {
+              if (e.key === 'Enter') {
+                handleClick();
+              }
+            }}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setValue(e.target.value)
             }
@@ -93,7 +100,7 @@ export function Autocomplete({
         onBlur={handleBlur}
         onMouseDown={(e) => e.preventDefault()}
         onClick={handleClick}
-        className="bg-marvel-red uppercase border px-6 py-[10.5px] text-white mt-[23px] ml-[-1px] disabled:opacity-20"
+        className="bg-marvel-red uppercase border px-6 py-[10.5px] text-white mt-[23px] ml-[-1px]"
       >Search</div>
     </div>
   );
