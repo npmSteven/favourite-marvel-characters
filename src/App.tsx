@@ -124,6 +124,7 @@ export function App() {
             {favouriteCharacters?.map((c: TMarvelCharacter) => (
               <li
                 onClick={() => toggleFavouriteCharacter(c)}
+                key={c.id}
                 className="mr-2 last-of-type:mr-0 my-2 relative bg-black h-[450px] w-[300px] cursor-pointer hover:bg-red-800"
               >
                 <span className="absolute w-full text-center top-[200px] text-white font-bold text-3xl uppercase z-10">{c.name}</span>
