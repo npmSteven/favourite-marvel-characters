@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         'marvel-red': '#EC1D24',
+        'marvel-black': '#202020',
       },
     },
   },
