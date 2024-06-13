@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import classNames from "classnames";
+import { toast } from 'react-toastify';
+
 import { Autocomplete } from "./components/Autocomplete";
 import { FavouriteCharacterContext } from "./contexts/FavouriteCharacterContext";
 import MarvelSVG from './assets/marvel.svg';
@@ -83,18 +85,18 @@ export function App() {
     try {
       // Check if the input (value state) has text and is equal or greater than 2 characters
       if (!search || search?.length <= 1) {
+        toast('You must enter at least 2 characters to search', { type: 'error' })
         return;
       }
       setIsLoading(true);
       
       const characters = await getMarvelCharactersSearch(search);
-       
       setCharacterResults(characters.map((c) => (
         <CharacterSearchItem key={c.id} character={c} text={c.name} src={`${c.thumbnail.path}/standard_medium.${c.thumbnail.extension}`} />
       )))
     } catch (e) {
       console.error('ERROR - onSearch():', e);
-      // notify that we failed to search
+      toast('Failed to fetch the marvel characters', { type: 'error' })
     } finally {
       setIsLoading(false);
     }

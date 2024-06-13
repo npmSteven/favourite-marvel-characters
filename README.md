@@ -1,10 +1,20 @@
 # Favourite Marvel Characters
 A simple app that allow you to call the marvel api and favourite your most loved marvel characters
 
+Main Page
+![marvel favourite app main page](./images/main.png)
+
+Main Page with Search
+![marvel favourite app main with search page](./images/main-search.png)
+
+Main Page with favourited characters
+![marvel favourite app main with favourited characters page](./images/main-favourite.png)
+
 ## Project Details
 
 ### Future Improvements
 - Make it mobile responsive
+- Split out the tests & have more tests
 - Seperate some of the components out from the App file
 - Implement infinite loading when fetching characters from the marvel api
 - Add option to order your favourite marvel characters with drag-n-drop
@@ -33,7 +43,7 @@ A simple app that allow you to call the marvel api and favourite your most loved
 
 ### Create a file in the root of the project `.env`
 - `VITE_API_URL` = `https://gateway.marvel.com:443/v1/public`
-- `VITE_API_KEY` = `your-api-key`
+- `VITE_API_KEY` = `your-api-key` to get the api key go to https://developer.marvel.com/
 
 ### Install dependencies
 - `pnpm i`
@@ -44,4 +54,7 @@ A simple app that allow you to call the marvel api and favourite your most loved
 ### Run and build the app
 - Creates a build `pnpm run build`
 - Runs the built code `pnpm run start`
+
+### How to run the tests for the app
+- Run the tests `pnpm run test`
 
