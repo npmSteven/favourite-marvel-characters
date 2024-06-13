@@ -3,12 +3,16 @@ import classNames from "classnames";
 import { Autocomplete } from "./components/Autocomplete";
 import { FavouriteCharacterContext } from "./contexts/FavouriteCharacterContext";
 import MarvelSVG from './assets/marvel.svg';
+import { TMarvelCharacter } from "./types/MarvelAPI";
 
 function CharacterSearchItem({ character, text, src }: { character: any, text: string; src: string}) {
-  const {
-    checkIsFavouriteCharacter,
-    toggleFavouriteCharacter,
-  } = useContext(FavouriteCharacterContext);
+  const context = useContext(FavouriteCharacterContext);
+
+  if (!context) {
+    throw new Error('FavouriteCharacterContext must be used within a FavouriteCharacterProvider');
+  }
+
+  const { checkIsFavouriteCharacter, toggleFavouriteCharacter } = context;
 
   const btnClass = classNames({
     'bg-marvel-red text-white': checkIsFavouriteCharacter(character.id)
@@ -31,18 +35,17 @@ function CharacterSearchItem({ character, text, src }: { character: any, text: s
 
 // Future improvement add TTL to cache
 const cache: {
-  [v: string]: any;
+  [v: string]: TMarvelCharacter[];
 } = {};
 
 // Add type for the results of the api call
-async function getMarvelCharactersSearch(value: string): Promise<Array<any>> {
+async function getMarvelCharactersSearch(value: string): Promise<Array<TMarvelCharacter>> {
   try {
     if (cache[value]) {
       return cache[value];
     }
 
     const url = new URL(`${import.meta.env.VITE_API_URL}/characters`);
-    // url.searchParams.set('name', value);
     url.searchParams.set('nameStartsWith', value);
     url.searchParams.set('orderBy', 'name');
     url.searchParams.set('limit', '100'); 
@@ -68,9 +71,13 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [characterResults, setCharacterResults] = useState<Array<React.ReactNode> | null>(null);
-  const {
-    favouriteCharacters,
-  } = useContext(FavouriteCharacterContext);
+  const context = useContext(FavouriteCharacterContext);
+
+  if (!context) {
+    throw new Error('FavouriteCharacterContext must be used within a FavouriteCharacterProvider');
+  }
+
+  const { favouriteCharacters, toggleFavouriteCharacter } = context;
 
   async function onSearch() {
     try {
@@ -114,13 +121,16 @@ export function App() {
         <div>
           <h3 className="text-center text-4xl mt-5 font-bold">Your Favourite Marval Characters</h3>
           <ul className="flex flex-wrap justify-center border w-[80vw] my-5 h-[75vh] overflow-scroll">
-            {favouriteCharacters.map((c) => (
-              <li className="mr-2 last-of-type:mr-0 my-2 relative bg-black">
+            {favouriteCharacters?.map((c: TMarvelCharacter) => (
+              <li
+                onClick={() => toggleFavouriteCharacter(c)}
+                className="mr-2 last-of-type:mr-0 my-2 relative bg-black h-[450px] w-[300px] cursor-pointer hover:bg-red-800"
+              >
                 <span className="absolute w-full text-center top-[200px] text-white font-bold text-3xl uppercase z-10">{c.name}</span>
                 <img className="opacity-60" src={`${c.thumbnail.path}/portrait_uncanny.${c.thumbnail.extension}`} />
               </li>
             ))}
-            {favouriteCharacters.length === 0 && (
+            {favouriteCharacters?.length === 0 && (
               <div className="my-10">You haven't favourited any characters yet, please use the above input to do so</div>
             )}
           </ul>
