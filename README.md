@@ -15,6 +15,7 @@ Main Page with favourited characters
 ### Future Improvements
 - Make it mobile responsive
 - Split out the tests & have more tests
+- Deploy the website to an S3 bucket or github pages
 - Seperate some of the components out from the App file
 - Implement infinite loading when fetching characters from the marvel api
 - Add option to order your favourite marvel characters with drag-n-drop
@@ -62,4 +63,3 @@ When accessing the app ensure you are using localhost
 
 ### How to run the tests for the app
 - Run the tests `pnpm run test`
-
