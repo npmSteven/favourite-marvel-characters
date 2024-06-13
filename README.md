@@ -41,6 +41,10 @@ Main Page with favourited characters
 - [NodeJS 20 or greater](https://nodejs.org/en/download/package-manager)
 - pnpm `npm i -g pnpm`
 
+### Clone the repo
+- `git clone git@github.com:npmSteven/favourite-marvel-characters.git`
+- `cd favourite-marvel-characters`
+
 ### Create a file in the root of the project `.env`
 - `VITE_API_URL` = `https://gateway.marvel.com:443/v1/public`
 - `VITE_API_KEY` = `your-api-key` to get the api key go to https://developer.marvel.com/
@@ -49,6 +53,7 @@ Main Page with favourited characters
 - `pnpm i`
 
 ### Run the app in develop mode
+When accessing the app ensure you are using localhost
 - `pnpm run dev`
 
 ### Run and build the app
