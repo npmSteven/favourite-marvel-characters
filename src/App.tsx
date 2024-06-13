@@ -5,7 +5,7 @@ import { FavouriteCharacterContext } from "./contexts/FavouriteCharacterContext"
 import MarvelSVG from './assets/marvel.svg';
 import { TMarvelCharacter } from "./types/MarvelAPI";
 
-function CharacterSearchItem({ character, text, src }: { character: any, text: string; src: string}) {
+export function CharacterSearchItem({ character, text, src }: { character: any, text: string; src: string}) {
   const context = useContext(FavouriteCharacterContext);
 
   if (!context) {
@@ -39,7 +39,7 @@ const cache: {
 } = {};
 
 // Add type for the results of the api call
-async function getMarvelCharactersSearch(value: string): Promise<Array<TMarvelCharacter>> {
+export async function getMarvelCharactersSearch(value: string): Promise<Array<TMarvelCharacter>> {
   try {
     if (cache[value]) {
       return cache[value];

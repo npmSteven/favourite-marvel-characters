@@ -82,12 +82,12 @@ export function Autocomplete({
           >
             {isLoading && (
               <div className="flex justify-center items-center h-full animate-pulse">
-                <img src={MarvelSVG} />
+                <img src={MarvelSVG} alt="loading" />
               </div>
             )}
             {isEmpty && <div className="text-center">No matches found!</div>}
             {!isLoading && !isEmpty && (
-              <div className="flex flex-col">{items}</div>
+              <div className="flex flex-col" role="listbox">{items}</div>
             )}
           </div>
         )}
